@@ -8,6 +8,16 @@ module.exports = function(grunt){
 				tagMessage: 'version %VERSION%',
 				pushTo: 'origin'
 			}
+		},
+		jshint: {
+			codebase: {
+				src: 'src/*.js'
+			}
+		},
+		complexity: {
+			codebase: {
+				src: 'src/*.js'
+			}
 		}
 	})
 
