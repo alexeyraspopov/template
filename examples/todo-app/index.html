@@ -5,6 +5,24 @@
 	<title></title>
 </head>
 <body>
+	<section id="todoApp">
+		<input type="text" placeholder="What you have to do?"
+			data-model="newTask"
+			data-submit="addTodo">
 
+		<ul>
+			<li data-each-todo="todos">
+				<input type="checkbox" data-model="todo.done">
+				<span data-text="todo.title"></span>
+				<button data-on-click="removeTodo">Remove</button>
+			</li>
+		</ul>
+
+		<!-- <p>Tasks: <span data-text="doneCount"></span>/<span data-text="todos.length">0</span></p> -->
+	</section>
+
+	<script src="../../src/core.js"></script>
+	<script src="../../src/handlers.js"></script>
+	<script></script>
 </body>
 </html>
