@@ -19,7 +19,7 @@ module.exports = function(grunt){
 				src: 'src/*.js'
 			}
 		}
-	})
+	});
 
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
