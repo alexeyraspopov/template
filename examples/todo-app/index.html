@@ -5,7 +5,7 @@
 	<title></title>
 </head>
 <body>
-	<section id="todoApp">
+	<section id="todoApp" data-controller="TodoController">
 		<input type="text" placeholder="What you have to do?"
 			data-model="newTask"
 			data-submit="addTodo">
@@ -23,6 +23,28 @@
 
 	<script src="../../src/core.js"></script>
 	<script src="../../src/handlers.js"></script>
-	<script></script>
+	<script>
+		function TodoController(scope){
+			scope.newTask = '';
+
+			scope.todos = [
+				{ title: 'Feed a cat', done: false }
+			];
+
+			scope.addTodo = function(){
+				if(scope.newTask){
+					scope.todos.push({ title: scope.newTask, done: false });
+					scope.newTask = '';
+				}
+			};
+
+			scope.removeTodo = function(event, context){
+				// context == todo
+				var index = scope.todos.indexOf(context);
+
+				scope.todos.splice(index, 1);
+			};
+		}
+	</script>
 </body>
 </html>
