@@ -10,7 +10,7 @@
 			data-model="newTask"
 			data-submit="addTodo">
 
-		<p data-text="field"></p>
+		<p data-text="newTask"></p>
 		<ul>
 			<li data-each-todo="todos">
 				<input type="checkbox" data-model="todo.done">
@@ -26,7 +26,6 @@
 	<script src="../../src/handlers.js"></script>
 	<script>
 		function TodoController(scope){
-			scope.field = 'boo';
 			scope.newTask = '';
 
 			scope.todos = [
