@@ -11,7 +11,6 @@ View.prototype.compile = function(){
 		node = walker.currentNode;
 
 	do{
-		console.log(node.dataset, node);
 		node = walker.nextNode(); // or nextSibling()
 	}while(node);
 };
