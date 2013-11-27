@@ -5,7 +5,7 @@
 	<title></title>
 </head>
 <body>
-	<section id="todoApp" data-controller="TodoController">
+	<section id="todoApp">
 		<input type="text" placeholder="What you have to do?"
 			data-model="newTask"
 			data-submit="addTodo">
@@ -45,6 +45,11 @@
 				scope.todos.splice(index, 1);
 			};
 		}
+
+		var root = document.getElementById('todoApp'), scope = {};
+
+		new TodoController(scope);
+		new View(root, scope);
 	</script>
 </body>
 </html>

@@ -18,6 +18,12 @@ module.exports = function(grunt){
 			codebase: {
 				src: 'src/*.js'
 			}
+		},
+		uglify: {
+			codebase: {
+				src: 'src/*.js',
+				dest: 'template.min.js'
+			}
 		}
 	});
 
