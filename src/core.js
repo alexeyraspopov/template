@@ -1,3 +1,4 @@
+
 function View(root, model){
 	this.element = root;
 	this.model = model;
@@ -6,6 +7,7 @@ function View(root, model){
 }
 
 View.prototype.compile = function(){
+	// TODO: perf test tree walker vs simple elements list
 	var filter = { acceptNode: function(){ return NodeFilter.FILTER_ACCEPT; } },
 		walker = document.createTreeWalker(this.element, NodeFilter.SHOW_ELEMENT, filter, false),
 		node = walker.currentNode;
