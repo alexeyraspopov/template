@@ -9,7 +9,7 @@ model = function(element, scope, attrs){
 		element.value = value;
 	});
 
-	element.addEventListener('keyup', function(){
+	element.addEventListener('change', function(){
 		scope[attrs.model] = this.value;
 	});
 };
