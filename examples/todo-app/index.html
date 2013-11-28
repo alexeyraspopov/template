@@ -11,13 +11,16 @@
 			data-submit="addTodo">
 
 		<p data-text="newTask"></p>
-		<ul>
+		<p data-text="nested.greet"></p>
+		<p data-text="nested.deep.greet"></p>
+
+		<!-- <ul>
 			<li data-each-todo="todos">
 				<input type="checkbox" data-model="todo.done">
 				<span data-text="todo.title"></span>
 				<button data-on-click="removeTodo">Remove</button>
 			</li>
-		</ul>
+		</ul> -->
 
 		<!-- <p>Tasks: <span data-text="doneCount"></span>/<span data-text="todos.length">0</span></p> -->
 	</section>
@@ -28,6 +31,13 @@
 	<script>
 		function TodoController(scope){
 			scope.newTask = '';
+
+			scope.nested = {
+				greet: 'hello',
+				deep: {
+					greet: 'hello again'
+				}
+			};
 
 			scope.todos = [
 				{ title: 'Feed a cat', done: false }
