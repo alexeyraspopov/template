@@ -15,20 +15,23 @@ View.prototype.compile = function(){
 
 	do{
 		this.createBindings(node);
-		node = walker.nextNode(); // or nextSibling()
+		node = walker.nextNode(); // or nextSibling() if currentNode is block
 	}while(node);
 };
 
 View.prototype.createBindings = function(node){
-	// TODO: create Binding contructor for each case of binding
-	Object.keys(node.dataset).filter(function(key){
-		return !!window[key];
-	}).map(function(key){
-		return window[key] instanceof Function ? { routine: window[key] } : window[key];
-	}).forEach(function(handler){
-		// set binding type (dataset key)
-		this.bindings.push(new Binding(node, this.scope, handler));
+
+	Object.keys(node.dataset).filter(function(type){
+		return !!window[type];
+	}).forEach(function(type){
+		this.bindings.push(new Binding(type, node, this.scope, this.handler(type)));
 	}, this);
+
+};
+
+View.prototype.handler = function(type){
+	// TODO: change handlers location
+	return window[type] instanceof Function ? { routine: window[type] } : window[type];
 };
 
 View.prototype.bind = function(){

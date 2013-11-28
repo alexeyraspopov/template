@@ -1,1 +1,0 @@
-function View(a,b){this.element=a,this.model=b,this.compile()}View.prototype.compile=function(){var a={acceptNode:function(){return NodeFilter.FILTER_ACCEPT}},b=document.createTreeWalker(this.element,NodeFilter.SHOW_ELEMENT,a,!1),c=b.currentNode;do console.log(c,c.dataset),c=b.nextNode();while(c)};

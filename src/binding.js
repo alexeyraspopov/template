@@ -1,7 +1,8 @@
-function Binding(element, scope, handler){
+function Binding(type, element, scope, handler){
 	this.element = element;
 	this.scope = scope;
 	this.handler = handler;
+	this.type = type;
 
 	// TODO: use routine only with two arguments: element, value
 	// TODO: observe value for binding for calling routine

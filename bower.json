@@ -1,0 +1,17 @@
+{
+  "name": "template",
+  "version": "0.1.0",
+  "description": "Simple DOM-driven template engine",
+  "homepage": "https://github.com/alexeyraspopov/template",
+  "authors": [
+    "Alexey Raspopov"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
