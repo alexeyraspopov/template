@@ -21,6 +21,7 @@ module.exports = function(grunt){
 		},
 		uglify: {
 			codebase: {
+				// TODO: wrap code
 				src: 'src/*.js',
 				dest: 'template.min.js'
 			}

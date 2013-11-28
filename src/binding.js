@@ -1,12 +1,12 @@
 function Binding(type, element, scope, handler){
-	this.element = element;
-	this.scope = scope;
-	this.handler = handler;
 	this.type = type;
+	this.scope = scope;
+	this.element = element;
+	this.handler = handler;
 
-	// TODO: use routine only with two arguments: element, value
-	// TODO: observe value for binding for calling routine
-	this.handler.routine(element, scope, element.dataset);
+	observe(scope, element.dataset[type], function(value){
+		handler.routine(element, value, scope);
+	});
 }
 
 Binding.prototype.bind = function(){
