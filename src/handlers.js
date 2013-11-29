@@ -1,3 +1,31 @@
+/**
+  TODO: analize AngularJS directives and declare api for handlers
+   - ngApp
+   - ngBind
+   - ngChecked
+   - ngClass
+   - ngClick / ngKeydown
+   - ngCloak
+   - ngController
+   - ngCopy / ngCut
+   - ngFocus
+   - ngForm
+   - ngHide / ngShow
+   - ngIf
+   - ngInclude
+   - ngInit
+   - ngList
+   - ngModel
+   - ngPluralize
+   - ngReadonly
+   - ngRepeat
+   - ngSelected
+   - ngSrc / ngSrcset
+   - ngStyle
+   - ngSubmit
+   - ngTransclude
+*/
+
 text = function(element, value){
 	element.textContent = value;
 };
