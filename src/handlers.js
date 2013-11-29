@@ -27,6 +27,7 @@
 
   Questions:
    - If I use functional paradigm, how can I implement drag'n'drop handlers?
+   - What about components binding?
 */
 
 text = function(element, value){
