@@ -24,6 +24,9 @@
    - ngStyle
    - ngSubmit
    - ngTransclude
+
+  Questions:
+   - If I use functional paradigm, how can I implement drag'n'drop handlers?
 */
 
 text = function(element, value){
