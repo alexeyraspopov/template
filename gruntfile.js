@@ -20,6 +20,9 @@ module.exports = function(grunt){
 			}
 		},
 		uglify: {
+			options: {
+				report: 'min'
+			},
 			codebase: {
 				// TODO: wrap code
 				src: 'src/*.js',
