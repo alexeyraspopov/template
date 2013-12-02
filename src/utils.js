@@ -16,22 +16,29 @@ function observe(target, path, callback){
 	callback(target.object[target.key]);
 }
 
-// TODO: reduce duplication
 function write(target, path, value){
 	target = targetByPath(target, path);
 	target.object[target.key] = value;
 }
 
-function targetByPath(target, path){
-	var tokens = path.split('.'),
-		key = tokens.pop() || path;
+function tokenize(path){
+	var tokens = path.split('.');
 
-	target = tokens.reduce(function(target, key){
+	return {
+		list: tokens,
+		name: tokens.pop() || path
+	};
+}
+
+function targetByPath(target, path){
+	var tokens = tokenize(path);
+
+	target = tokens.list.reduce(function(target, key){
 		return target[key];
 	}, target);
 
 	return {
 		object: target,
-		key: key
+		key: tokens.name
 	};
 }

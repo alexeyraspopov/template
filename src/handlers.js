@@ -38,4 +38,4 @@ checked = {
 	routine: function(element, value){
 		element.checked = !!value;
 	}
-}
+};
