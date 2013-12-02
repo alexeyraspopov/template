@@ -10,7 +10,11 @@ function Binding(type, element, scope, handler){
 }
 
 Binding.prototype.bind = function(){
-	if(this.handler.bind){
-		this.handler.bind(this.element, this.scope, this.element.dataset);
+	if(this.handler.publish){
+		this.handler.bind(this.element, this.publish.bind(this));
 	}
+};
+
+Binding.prototype.publish = function(){
+	write(scope, this.element.dataset[this.type], this.handler.value(this.element));
 };
