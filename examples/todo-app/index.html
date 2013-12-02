@@ -14,6 +14,9 @@
 		<p data-text="nested.greet"></p>
 		<p data-text="nested.deep.greet"></p>
 
+		<input type="checkbox" data-checked="check">
+		<p data-show="check">pew</p>
+
 		<!-- <ul>
 			<li data-each-todo="todos">
 				<input type="checkbox" data-model="todo.done">
@@ -32,6 +35,7 @@
 	<script>
 		function TodoController(scope){
 			scope.newTask = '';
+			scope.check = false;
 
 			scope.nested = {
 				greet: 'hello',
