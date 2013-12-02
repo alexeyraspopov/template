@@ -1,15 +1,18 @@
-text = function(element, value){
-	element.textContent = value;
+text = {
+	routine: function(element, value){
+		element.textContent = value;
+	}
 };
 
 model = {
+	publish: true,
+	bind: function(element, publish){
+		element.addEventListener('change', publish);
+	},
+	value: function(element){
+		return element.value;
+	},
 	routine: function(element, value){
 		element.value = value;
-	},
-	bind: function(element, scope, attrs){
-		element.addEventListener('change', function(){
-			// TODO: work with nested keypath
-			scope[attrs.model] = this.value;
-		});
 	}
 };

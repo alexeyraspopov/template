@@ -20,18 +20,17 @@ View.prototype.compile = function(){
 };
 
 View.prototype.createBindings = function(node){
-
 	Object.keys(node.dataset).filter(function(type){
 		return !!window[type];
 	}).forEach(function(type){
 		this.bindings.push(new Binding(type, node, this.scope, this.handler(type)));
 	}, this);
-
 };
 
 View.prototype.handler = function(type){
 	// TODO: change handlers location
-	return window[type] instanceof Function ? { routine: window[type] } : window[type];
+	// TODO: use simple function for handlers with only one method 'routine'
+	return window[type];
 };
 
 View.prototype.bind = function(){
