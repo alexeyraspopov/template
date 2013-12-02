@@ -9,6 +9,9 @@ model = {
 	bind: function(element, publish){
 		element.addEventListener('change', publish);
 	},
+	unbind: function(element, publish){
+		element.removeEventListener('change', publish);
+	},
 	value: function(element){
 		return element.value;
 	},
@@ -32,6 +35,7 @@ hide = {
 checked = {
 	publish: true,
 	bind: model.bind,
+	unbind: model.unbind,
 	value: function(element){
 		return element.checked;
 	},

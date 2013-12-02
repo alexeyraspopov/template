@@ -34,3 +34,9 @@ View.prototype.bind = function(){
 		binding.bind();
 	});
 };
+
+View.prototype.unbind = function(){
+	this.bindings.forEach(function(binding){
+		binding.unbind();
+	});
+};
