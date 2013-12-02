@@ -7,6 +7,10 @@ data-attr-*
   subscribe value change
   update element by value
 
+data-each-*
+  subscribe value change
+  ...
+
 ? need pattern (for 'src')
 
 data-bind
