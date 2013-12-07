@@ -1,5 +1,7 @@
 # Template
 
+Simple DOM-driven template engine
+
 ## Challenges
 
  - build template without using methods for search elements
