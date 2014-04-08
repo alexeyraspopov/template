@@ -10,13 +10,13 @@ Simple DOM-driven template engine
 
 ## TODO
 
- - Use [sightglass](https://github.com/mikeric/sightglass) for object observing
- - Use [reactive](https://github.com/alexeyraspopov/reactive) for models
- - Use [fastdom](https://github.com/wilsonpage/fastdom) for dom writing
- - create bindings:
-  - attribs (with two-way binding)
-  - events
-  - iterator
+	- [deprecated] Use [sightglass](https://github.com/mikeric/sightglass) for object observing
+	+ Use [reactive](https://github.com/alexeyraspopov/reactive) for models
+	- Use [fastdom](https://github.com/wilsonpage/fastdom) for dom writing
+	- create bindings:
+		+ attribs (with two-way binding)
+		+/- events
+		- iterator
 
 ## License
 
