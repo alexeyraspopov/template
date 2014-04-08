@@ -15,5 +15,17 @@
 	</div>
 
 	<script src="lab/dest/index.js"></script>
+	<script>
+		var template = require('template'),
+			reactive = require('reactive');
+
+		template.compile(viewport, {
+			name: reactive.observable('Alex'),
+			// TODO: remove wrapper; unwrapObservable??
+			click: reactive.observable(function(){
+				console.log(arguments);
+			})
+		});
+	</script>
 </body>
 </html>

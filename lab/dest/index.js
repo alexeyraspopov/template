@@ -1,4 +1,4 @@
-(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({"h852ID":[function(require,module,exports){
 'use strict';
 
 var deps, recording;
@@ -102,7 +102,9 @@ exports.extenders = {
 	}
 };
 
-},{}],2:[function(require,module,exports){
+},{}],"reactive":[function(require,module,exports){
+module.exports=require('h852ID');
+},{}],"iVDqJA":[function(require,module,exports){
 /* jshint browser:true */
 'use strict';
 
@@ -214,9 +216,11 @@ exports.compile = compile;
 exports.handlers = bindings;
 exports.adapter = adapter;
 
-},{}],3:[function(require,module,exports){
-var reactive = require('../bower_components/reactive/index.js'),
-	template = require('../index.js');
+},{}],"template":[function(require,module,exports){
+module.exports=require('iVDqJA');
+},{}],5:[function(require,module,exports){
+var reactive = require('reactive'),
+	template = require('template');
 
 
 function getTarget(source, keypath){
@@ -241,12 +245,4 @@ template.adapter.set = function(object, keypath, value){
 	getTarget(object, keypath)(value);
 };
 
-template.compile(viewport, {
-	name: reactive.observable('Alex'),
-	// TODO: remove wrapper; unwrapObservable??
-	click: reactive.observable(function(){
-		console.log(arguments);
-	})
-});
-
-},{"../bower_components/reactive/index.js":1,"../index.js":2}]},{},[3])
+},{"reactive":"h852ID","template":"iVDqJA"}]},{},[5])

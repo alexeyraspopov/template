@@ -1,5 +1,5 @@
-var reactive = require('../bower_components/reactive/index.js'),
-	template = require('../index.js');
+var reactive = require('reactive'),
+	template = require('template');
 
 
 function getTarget(source, keypath){
@@ -23,11 +23,3 @@ template.adapter.get = function(object, keypath){
 template.adapter.set = function(object, keypath, value){
 	getTarget(object, keypath)(value);
 };
-
-template.compile(viewport, {
-	name: reactive.observable('Alex'),
-	// TODO: remove wrapper; unwrapObservable??
-	click: reactive.observable(function(){
-		console.log(arguments);
-	})
-});
