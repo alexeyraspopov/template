@@ -8,11 +8,14 @@
 
 	<div id="viewport">
 		<p data-inner-text="name"></p>
+
+		<input type="text" data-value="name">
 	</div>
 
 	<script src="index.js"></script>
 	<script>
-		compile(viewport, { name: 'Alex' }, bind);
+		var model = { name: 'Alex' };
+		compile(viewport, model);
 	</script>
 </body>
 </html>
