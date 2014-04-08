@@ -110,20 +110,20 @@ var bindings = {
 	'value': {
 		bind: function(element, publish){ element.addEventListener('change', publish); },
 		unbind: function(element, publish){ element.removeEventListener('change', publish); },
-		routine: function(element, key, value){ element[key] = value; }
+		routine: function(element, value){ element.value = value; }
 	},
 	'text': {
-		routine: function(element, key, value){ element.innerText = value; }
+		routine: function(element, value){ element.innerText = value; }
 	},
 	'on-*': {
 		bind: function(element, publish, args){ console.log(this, element, args[0].toLowerCase()); },
 		// TODO: save handler
 		// TODO: rewrite to use `bind`
-		routine: function(element, key, value, args){
+		routine: function(element, value, args){
 			element.addEventListener(args[0].toLowerCase(), value);
 		}
 	},
-	'*': { routine: function(element, key, value){ element.setAttribute(key, value); } }
+	'*': { routine: function(element, value, args){ element.setAttribute(args[0], value); } }
 };
 
 var adapter = {
@@ -194,18 +194,18 @@ function bind(node, model, bindings){
 
 		if(handler){
 			var args = handler.name.exec(key);
-			var originalKey = args[0]; // is it necessary?
-			var keypath = node.dataset[originalKey];
+			console.log(key, args[0]);
+			var keypath = node.dataset[args[0]];
 
 			adapter.observe(model, keypath, function(){
-				handler.routine(node, originalKey, adapter.get(model, keypath), args.slice(2));
+				handler.routine(node, adapter.get(model, keypath), args.slice(2));
 			});
 
 			handler.bind(node, function(){
 				adapter.set(model, keypath, node.value);
 			}, args.slice(2));
 
-			handler.routine(node, originalKey, adapter.get(model, keypath), args.slice(2));
+			handler.routine(node, adapter.get(model, keypath), args.slice(2));
 		}
 	});
 }
