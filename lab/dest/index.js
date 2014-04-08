@@ -112,6 +112,15 @@ var bindings = {
 		unbind: function(element, publish){ element.removeEventListener('change', publish); },
 		routine: function(element, key, value){ element[key] = value; }
 	},
+	'on-*': {
+		bind: function(element, publish, args){ console.log(this, element, args[0].toLowerCase()); },
+		// TODO: save handler
+		// TODO: rewrite to use `bind`
+		routine: function(element, key, value, args){
+			element.addEventListener(args[0].toLowerCase(), value);
+		}
+	},
+	// TODO: use .setAttribute
 	'*': { routine: function(element, key, value){ element[key] = value; } }
 };
 
@@ -127,7 +136,7 @@ var adapter = {
 	},
 	set: function(object, key, value){
 		// object[key] = value;
-	},
+	}
 };
 
 function createTreeWalker(root){
@@ -149,7 +158,8 @@ function mixin(target, source, keys){
 }
 
 function Binder(key, binder){
-	this.name = new RegExp('(' + key.replace(/\*/g, '.+') + ')');
+	// TODO: [A-Z] -> fuck this out
+	this.name = new RegExp('(' + key.replace(/\-/g, '').replace(/\*/g, '(.+)') + ')');
 	mixin(this, binder);
 }
 
@@ -180,10 +190,9 @@ function bind(node, model, bindings){
 			return handler.name.test(key);
 		});
 
-		// TODO: subscribe value mutation
-		// TODO: use sightglass
 		if(handler){
-			var originalKey = handler.name.exec(key)[0]; // is it necessary?
+			var args = handler.name.exec(key);
+			var originalKey = args[0]; // is it necessary?
 			var keypath = node.dataset[originalKey];
 
 			adapter.observe(model, keypath, function(){
@@ -192,9 +201,9 @@ function bind(node, model, bindings){
 
 			handler.bind(node, function(){
 				adapter.set(model, keypath, node.value);
-			});
+			}, args.slice(2));
 
-			handler.routine(node, originalKey, adapter.get(model, keypath));
+			handler.routine(node, originalKey, adapter.get(model, keypath), args.slice(2));
 		}
 	});
 }
@@ -215,25 +224,27 @@ function getTarget(source, keypath){
 }
 
 template.adapter.observe = function(object, keypath, callback){
-	object = getTarget(object, keypath);
-	object.subscribe(callback);
+	getTarget(object, keypath).subscribe(callback);
 };
 
 template.adapter.unobserve = function(object, keypath, callback){
-	object = getTarget(object, keypath);
-	object.unsubscribe(callback);
+	getTarget(object, keypath).unsubscribe(callback);
 };
 
 template.adapter.get = function(object, keypath){
-	object = getTarget(object, keypath);
-	return object();
+	return getTarget(object, keypath)();
 };
 
 template.adapter.set = function(object, keypath, value){
-	object = getTarget(object, keypath);
-	object(value);
+	getTarget(object, keypath)(value);
 };
 
-template.compile(viewport, { name: reactive.observable('Alex') });
+template.compile(viewport, {
+	name: reactive.observable('Alex'),
+	// TODO: remove wrapper; unwrapObservable??
+	click: reactive.observable(function(){
+		console.log(arguments);
+	})
+});
 
 },{"../bower_components/reactive/index.js":1,"../index.js":2}]},{},[3])

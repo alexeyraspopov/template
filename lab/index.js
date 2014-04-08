@@ -9,23 +9,25 @@ function getTarget(source, keypath){
 }
 
 template.adapter.observe = function(object, keypath, callback){
-	object = getTarget(object, keypath);
-	object.subscribe(callback);
+	getTarget(object, keypath).subscribe(callback);
 };
 
 template.adapter.unobserve = function(object, keypath, callback){
-	object = getTarget(object, keypath);
-	object.unsubscribe(callback);
+	getTarget(object, keypath).unsubscribe(callback);
 };
 
 template.adapter.get = function(object, keypath){
-	object = getTarget(object, keypath);
-	return object();
+	return getTarget(object, keypath)();
 };
 
 template.adapter.set = function(object, keypath, value){
-	object = getTarget(object, keypath);
-	object(value);
+	getTarget(object, keypath)(value);
 };
 
-template.compile(viewport, { name: reactive.observable('Alex') });
+template.compile(viewport, {
+	name: reactive.observable('Alex'),
+	// TODO: remove wrapper; unwrapObservable??
+	click: reactive.observable(function(){
+		console.log(arguments);
+	})
+});
