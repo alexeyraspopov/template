@@ -14,7 +14,12 @@ gulp.task('default', function(){
 
 gulp.task('lab', function(){
 	return gulp.src('lab/index.js')
-		.pipe(browserify())
+		.pipe(browserify({
+			require: [
+				['../index.js', { expose: 'template' }],
+				['../bower_components/reactive/index.js', { expose: 'reactive' }]
+			]
+		}))
 		.pipe(gulp.dest('lab/dest'));
 });
 
