@@ -17,3 +17,7 @@ gulp.task('lab', function(){
 		.pipe(browserify())
 		.pipe(gulp.dest('lab/dest'));
 });
+
+gulp.task('watch', function(){
+	gulp.watch(['index.js', 'lab/index.js'], ['lab']);
+});
