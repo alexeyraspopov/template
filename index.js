@@ -93,7 +93,7 @@ function bind(node, model, bindings){
 			var keypath = node.dataset[originalKey];
 
 			adapter.observe(model, keypath, function(){
-				handler.routine(node, originalKey, adapter.get(model, keypath));
+				handler.routine(node, originalKey, adapter.get(model, keypath), args.slice(2));
 			});
 
 			handler.bind(node, function(){

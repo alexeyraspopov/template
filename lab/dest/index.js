@@ -113,7 +113,7 @@ var bindings = {
 		routine: function(element, key, value){ element[key] = value; }
 	},
 	'text': {
-		routine: function(element, key, value){element.innerText = value; }
+		routine: function(element, key, value){ element.innerText = value; }
 	},
 	'on-*': {
 		bind: function(element, publish, args){ console.log(this, element, args[0].toLowerCase()); },
@@ -123,7 +123,6 @@ var bindings = {
 			element.addEventListener(args[0].toLowerCase(), value);
 		}
 	},
-	// TODO: use .setAttribute
 	'*': { routine: function(element, key, value){ element.setAttribute(key, value); } }
 };
 
@@ -199,7 +198,7 @@ function bind(node, model, bindings){
 			var keypath = node.dataset[originalKey];
 
 			adapter.observe(model, keypath, function(){
-				handler.routine(node, originalKey, adapter.get(model, keypath));
+				handler.routine(node, originalKey, adapter.get(model, keypath), args.slice(2));
 			});
 
 			handler.bind(node, function(){
