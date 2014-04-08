@@ -7,6 +7,9 @@ var bindings = {
 		unbind: function(element, publish){ element.removeEventListener('change', publish); },
 		routine: function(element, key, value){ element[key] = value; }
 	},
+	'text': {
+		routine: function(element, key, value){ element.innerText = value; }
+	},
 	'on-*': {
 		bind: function(element, publish, args){ console.log(this, element, args[0].toLowerCase()); },
 		// TODO: save handler
@@ -15,8 +18,7 @@ var bindings = {
 			element.addEventListener(args[0].toLowerCase(), value);
 		}
 	},
-	// TODO: use .setAttribute
-	'*': { routine: function(element, key, value){ element[key] = value; } }
+	'*': { routine: function(element, key, value){ element.setAttribute(key, value); } }
 };
 
 var adapter = {
