@@ -10,6 +10,21 @@ var bindings = {
 	'*': { routine: function(element, key, value){ element[key] = value; } }
 };
 
+var adapter = {
+	observe: function(object, keypath, callback){
+		// implement
+	},
+	unobserve: function(object, keypath, callback){
+		// implement
+	},
+	get: function(object, key){
+		// return object[key];
+	},
+	set: function(object, key, value){
+		// object[key] = value;
+	},
+};
+
 function createTreeWalker(root){
 	var filter = { acceptNode: function(){ return NodeFilter.FILTER_ACCEPT; } },
 		walker = document.createTreeWalker(root, NodeFilter.SHOW_ELEMENT, filter, false);
@@ -63,11 +78,22 @@ function bind(node, model, bindings){
 		// TODO: subscribe value mutation
 		// TODO: use sightglass
 		if(handler){
-			var originalKey = handler.name.exec(key)[0];
-			var value = model[node.dataset[originalKey]];
-			// handler.bind(node, function(){ console.log(1); });
-			handler.routine(node, originalKey, value);
+			var originalKey = handler.name.exec(key)[0]; // is it necessary?
+			var keypath = node.dataset[originalKey];
+
+			adapter.observe(model, keypath, function(){
+				handler.routine(node, originalKey, adapter.get(model, keypath));
+			});
+
+			handler.bind(node, function(){
+				adapter.set(model, keypath, node.value);
+			});
+
+			handler.routine(node, originalKey, adapter.get(model, keypath));
 		}
 	});
 }
 
+exports.compile = compile;
+exports.handlers = bindings;
+exports.adapter = adapter;
