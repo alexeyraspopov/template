@@ -9,6 +9,7 @@
     "reactive": "alexeyraspopov/reactive#~0.3.1",
     "sightglass": "mikeric/sightglass#~0.1.2",
     "fastdom": "wilsonpage/fastdom#~0.8.4",
-    "object-assign": "sindresorhus/object-assign#~0.2.2"
+    "object-assign": "sindresorhus/object-assign#~0.2.2",
+    "fn": "alexeyraspopov/fn#~0.1.1"
   }
 }
