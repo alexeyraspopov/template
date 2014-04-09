@@ -3,9 +3,7 @@ var reactive = require('reactive'),
 
 
 function getTarget(source, keypath){
-	return keypath.split('.').reduce(function(source, key){
-		return source[key];
-	}, source);
+	return new Function('_', 'return _.' + keypath.trim())(source);
 }
 
 template.adapter.observe = function(object, keypath, callback){

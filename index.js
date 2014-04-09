@@ -11,12 +11,10 @@ var bindings = {
 		routine: function(element, value){ element.innerText = value; }
 	},
 	'on-*': {
-		bind: function(element, publish, args){ console.log(this, element, args[0].toLowerCase()); },
+		bind: function(element, publish, args){  },
 		// TODO: save handler
 		// TODO: rewrite to use `bind`
-		routine: function(element, value, args){
-			element.addEventListener(args[0].toLowerCase(), value);
-		}
+		routine: function(element, value, args){ element.addEventListener(args[0], value); }
 	},
 	'*': { routine: function(element, value, args){ element.setAttribute(args[0], value); } }
 };
@@ -55,8 +53,7 @@ function mixin(target, source, keys){
 }
 
 function Binder(key, binder){
-	// TODO: [A-Z] -> fuck this out
-	this.name = new RegExp('(' + key.replace(/\-/g, '').replace(/\*/g, '(.+)') + ')');
+	this.name = new RegExp(key.replace(/\-/g, '').replace(/\*/g, '(.+)'));
 	mixin(this, binder);
 }
 
@@ -89,18 +86,22 @@ function bind(node, model, bindings){
 
 		if(handler){
 			var args = handler.name.exec(key);
-			console.log(key, args[0]);
-			var keypath = node.dataset[args[0]];
+
+			var keypath = node.dataset[args.splice(0, 1)];
+
+			args = args.map(function(key){
+				return key.toLowerCase();
+			});
 
 			adapter.observe(model, keypath, function(){
-				handler.routine(node, adapter.get(model, keypath), args.slice(2));
+				handler.routine(node, adapter.get(model, keypath), args);
 			});
 
 			handler.bind(node, function(){
 				adapter.set(model, keypath, node.value);
-			}, args.slice(2));
+			}, args);
 
-			handler.routine(node, adapter.get(model, keypath), args.slice(2));
+			handler.routine(node, adapter.get(model, keypath), args);
 		}
 	});
 }
