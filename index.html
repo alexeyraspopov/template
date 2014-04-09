@@ -8,6 +8,7 @@
 
 	<div id="viewport">
 		<p data-text="name"></p>
+		<p data-text="nested.last"></p>
 
 		<input type="text" data-value="name" data-i="name">
 
@@ -24,7 +25,11 @@
 			// TODO: remove wrapper; unwrapObservable??
 			click: reactive.observable(function(){
 				console.log(arguments);
-			})
+			}),
+
+			nested: {
+				last: reactive.observable(13)
+			}
 		});
 	</script>
 </body>
