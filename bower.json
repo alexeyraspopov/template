@@ -6,7 +6,7 @@
   "main": "index.js",
   "author": "Alexey Raspopov (https://github.com/alexeyraspopov)",
   "devDependencies": {
-    "reactive": "alexeyraspopov/reactive#~0.3.2",
+    "reactive": "alexeyraspopov/reactive#~0.3.3",
     "sightglass": "mikeric/sightglass#~0.1.2",
     "fastdom": "wilsonpage/fastdom#~0.8.4",
     "object-assign": "sindresorhus/object-assign#~0.2.2",
