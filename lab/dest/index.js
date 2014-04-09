@@ -114,31 +114,26 @@ var bindings = {
 		unbind: function(element, publish){ element.removeEventListener('change', publish); },
 		routine: function(element, value){ element.value = value; }
 	},
-	'text': {
-		routine: function(element, value){ element.innerText = value; }
-	},
-	'on-*': {
-		bind: function(element, publish, args){  },
-		// TODO: save handler
-		// TODO: rewrite to use `bind`
-		routine: function(element, value, args){ element.addEventListener(args[0], value); }
-	},
+	'text': { routine: function(element, value){ element.innerText = value; } },
+	'html': { routine: function(element, value){ element.innerHTML = value; } },
+
+	// TODO: what if handler was changed? Should I remove prev listener?
+	'on-*': { routine: function(element, value, args){ element.addEventListener(args[0], value); } },
 	'*': { routine: function(element, value, args){ element.setAttribute(args[0], value); } }
 };
 
 var adapter = {
-	observe: function(object, keypath, callback){
-		// implement
-	},
-	unobserve: function(object, keypath, callback){
-		// implement
-	},
-	get: function(object, key){
-		// return object[key];
-	},
-	set: function(object, key, value){
-		// object[key] = value;
-	}
+	// object, keypath, callback
+	observe: function(){},
+
+	// object, keypath, callback
+	unobserve: function(){},
+
+	// object, key
+	get: function(){},
+
+	// object, key, value
+	set: function(){}
 };
 
 function createTreeWalker(root){
@@ -148,20 +143,12 @@ function createTreeWalker(root){
 	return walker;
 }
 
-// use sindresorhus/object-assign
-function mixin(target, source, keys){
-	keys = keys || Object.keys(source);
-
-	keys.forEach(function(key){
-		target[key] = source[key];
-	});
-
-	return target;
-}
-
 function Binder(key, binder){
 	this.name = new RegExp(key.replace(/\-/g, '').replace(/\*/g, '(.+)'));
-	mixin(this, binder);
+
+	Object.keys(binder).forEach(function(key){
+		this[key] = binder[key];
+	}, this);
 }
 
 Binder.prototype.routine = function(){};
@@ -192,25 +179,28 @@ function bind(node, model, bindings){
 		});
 
 		if(handler){
-			var args = handler.name.exec(key);
-
-			var keypath = node.dataset[args.splice(0, 1)];
-
-			args = args.map(function(key){
-				return key.toLowerCase();
-			});
-
-			adapter.observe(model, keypath, function(){
-				handler.routine(node, adapter.get(model, keypath), args);
-			});
-
-			handler.bind(node, function(){
-				adapter.set(model, keypath, node.value);
-			}, args);
-
-			handler.routine(node, adapter.get(model, keypath), args);
+			handle(node, key, model, handler);
 		}
 	});
+}
+
+function handle(node, type, model, handler){
+	var args = handler.name.exec(type),
+		keypath = node.dataset[args.splice(0, 1)];
+
+	args = args.map(function(key){
+		return key.toLowerCase();
+	});
+
+	adapter.observe(model, keypath, function(){
+		handler.routine(node, adapter.get(model, keypath), args);
+	});
+
+	handler.bind(node, function(){
+		adapter.set(model, keypath, node.value);
+	}, args);
+
+	handler.routine(node, adapter.get(model, keypath), args);
 }
 
 exports.compile = compile;
@@ -223,21 +213,30 @@ module.exports=require('iVDqJA');
 var reactive = require('reactive'),
 	template = require('template');
 
+function unwrap(fn){
+	// FIXME: update reactive
+	return fn.comparator ? fn() : fn;
+}
 
 function getTarget(source, keypath){
+	// TODO: How can I observe full path?
 	return new Function('_', 'return _.' + keypath.trim())(source);
 }
 
 template.adapter.observe = function(object, keypath, callback){
-	getTarget(object, keypath).subscribe(callback);
+	var target = getTarget(object, keypath)
+
+	target.comparator && target.subscribe(callback);
 };
 
 template.adapter.unobserve = function(object, keypath, callback){
-	getTarget(object, keypath).unsubscribe(callback);
+	var target = getTarget(object, keypath)
+
+	target.comparator && target.unsubscribe(callback);
 };
 
 template.adapter.get = function(object, keypath){
-	return getTarget(object, keypath)();
+	return unwrap(getTarget(object, keypath));
 };
 
 template.adapter.set = function(object, keypath, value){

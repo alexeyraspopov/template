@@ -23,9 +23,9 @@
 		template.compile(viewport, {
 			name: reactive.observable('Alex'),
 			// TODO: remove wrapper; unwrapObservable??
-			click: reactive.observable(function(){
+			click: function(){
 				console.log(arguments);
-			}),
+			},
 
 			nested: {
 				last: reactive.observable(13)
