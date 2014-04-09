@@ -1,4 +1,5 @@
 require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({"h852ID":[function(require,module,exports){
+// TODO: observable.fn
 'use strict';
 
 var deps, recording;
@@ -39,6 +40,8 @@ exports.observable = function(value){
 
 		return value;
 	};
+
+	cell.isObservable = true;
 
 	cell.comparator = function(value, newValue){
 		return value !== newValue;
@@ -215,7 +218,7 @@ var reactive = require('reactive'),
 
 function unwrap(fn){
 	// FIXME: update reactive
-	return fn.comparator ? fn() : fn;
+	return fn.isObservable ? fn() : fn;
 }
 
 function getTarget(source, keypath){
@@ -226,13 +229,13 @@ function getTarget(source, keypath){
 template.adapter.observe = function(object, keypath, callback){
 	var target = getTarget(object, keypath)
 
-	target.comparator && target.subscribe(callback);
+	target.isObservable && target.subscribe(callback);
 };
 
 template.adapter.unobserve = function(object, keypath, callback){
 	var target = getTarget(object, keypath)
 
-	target.comparator && target.unsubscribe(callback);
+	target.isObservable && target.unsubscribe(callback);
 };
 
 template.adapter.get = function(object, keypath){

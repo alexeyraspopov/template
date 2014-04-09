@@ -3,7 +3,7 @@ var reactive = require('reactive'),
 
 function unwrap(fn){
 	// FIXME: update reactive
-	return fn.comparator ? fn() : fn;
+	return fn.isObservable ? fn() : fn;
 }
 
 function getTarget(source, keypath){
@@ -14,13 +14,13 @@ function getTarget(source, keypath){
 template.adapter.observe = function(object, keypath, callback){
 	var target = getTarget(object, keypath)
 
-	target.comparator && target.subscribe(callback);
+	target.isObservable && target.subscribe(callback);
 };
 
 template.adapter.unobserve = function(object, keypath, callback){
 	var target = getTarget(object, keypath)
 
-	target.comparator && target.unsubscribe(callback);
+	target.isObservable && target.unsubscribe(callback);
 };
 
 template.adapter.get = function(object, keypath){
