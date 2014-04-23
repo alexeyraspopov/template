@@ -29,13 +29,6 @@ var adapter = {
 	set: function(){}
 };
 
-function createTreeWalker(root){
-	var filter = { acceptNode: function(){ return NodeFilter.FILTER_ACCEPT; } },
-		walker = document.createTreeWalker(root, NodeFilter.SHOW_ELEMENT, filter, false);
-
-	return walker;
-}
-
 function Binder(key, binder){
 	this.name = new RegExp(key.replace(/\-/g, '').replace(/\*/g, '(.+)'));
 
