@@ -55,14 +55,13 @@ function getBindings(){
 }
 
 function compile(root, model){
-	var walker = createTreeWalker(root),
-		node = walker.currentNode,
-		bindings = getBindings();
+	var bindings = getBindings(),
+		walk = require('dom-walker');
 
-	do{
+	walk(root, function(node, next){
 		bind(node, model, bindings);
-		node = walker.nextNode(); // .nextSibling();
-	}while(node);
+		next();
+	});
 }
 
 function bind(node, model, bindings){

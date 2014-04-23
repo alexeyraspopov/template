@@ -4,5 +4,8 @@
   "description": "Simple DOM-driven template engine",
   "license": "MIT",
   "main": "index.js",
-  "author": "Alexey Raspopov (https://github.com/alexeyraspopov)"
+  "author": "Alexey Raspopov (https://github.com/alexeyraspopov)",
+  "dependencies": {
+    "alexeyraspopov/dom-walker": "~0.2.1"
+  }
 }
